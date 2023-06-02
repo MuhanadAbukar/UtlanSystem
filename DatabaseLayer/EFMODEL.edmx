@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Active">
+          <Key>
+            <PropertyRef Name="EFID" />
+          </Key>
+          <Property Name="PERSONID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PERSONNAME" Type="nvarchar(max)" />
+          <Property Name="ITEMID" Type="int" Nullable="false" />
+          <Property Name="DATE" Type="date" Nullable="false" />
+          <Property Name="TRANSACTIONID" Type="nvarchar(max)" />
+          <Property Name="EFID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="ITEMID" />
+          </Key>
+          <Property Name="ITEMID" Type="int" Nullable="false" />
+          <Property Name="ITEMNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="EFID" />
+          </Key>
+          <Property Name="TRANSACTIONID" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PERSONID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PERSONNAME" Type="nvarchar(max)" />
+          <Property Name="ITEMID" Type="int" Nullable="false" />
+          <Property Name="TRANSACTIONDATE" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TRANSACTIONTYPE" Type="int" />
+          <Property Name="EFID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TRANSACTIONTYPE" />
+          </Key>
+          <Property Name="TRANSACTIONTYPE" Type="int" Nullable="false" />
+          <Property Name="TRANSACTIONNAME" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Logs_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ITEMID" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="ITEMID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Transaction">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TRANSACTIONTYPE" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="TRANSACTIONTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UTModelStoreContainer">
+          <EntitySet Name="Active" EntityType="Self.Active" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Logs_Items" Association="Self.FK_Logs_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Transaction" Association="Self.FK_Logs_Transaction">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Active">
+          <Key>
+            <PropertyRef Name="EFID" />
+          </Key>
+          <Property Name="PERSONID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PERSONNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ITEMID" Type="Int32" Nullable="false" />
+          <Property Name="DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TRANSACTIONID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EFID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ITEMID" />
+          </Key>
+          <Property Name="ITEMID" Type="Int32" Nullable="false" />
+          <Property Name="ITEMNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_Items" FromRole="Items" ToRole="Logs" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="EFID" />
+          </Key>
+          <Property Name="TRANSACTIONID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PERSONID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PERSONNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ITEMID" Type="Int32" Nullable="false" />
+          <Property Name="TRANSACTIONDATE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TRANSACTIONTYPE" Type="Int32" />
+          <Property Name="EFID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Logs_Items" FromRole="Logs" ToRole="Items" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK_Logs_Transaction" FromRole="Logs" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TRANSACTIONTYPE" />
+          </Key>
+          <Property Name="TRANSACTIONTYPE" Type="Int32" Nullable="false" />
+          <Property Name="TRANSACTIONNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_Transaction" FromRole="Transaction" ToRole="Logs" />
+        </EntityType>
+        <Association Name="FK_Logs_Items">
+          <End Role="Items" Type="Self.Item" Multiplicity="1" />
+          <End Role="Logs" Type="Self.Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ITEMID" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="ITEMID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Transaction">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Logs" Type="Self.Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TRANSACTIONTYPE" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="TRANSACTIONTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EFModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actives" EntityType="Self.Active" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Logs" EntityType="Self.Log" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <AssociationSet Name="FK_Logs_Items" Association="Self.FK_Logs_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Transaction" Association="Self.FK_Logs_Transaction">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UTModelStoreContainer" CdmEntityContainer="EFModel">
+          <EntitySetMapping Name="Actives">
+            <EntityTypeMapping TypeName="UTModel.Active">
+              <MappingFragment StoreEntitySet="Active">
+                <ScalarProperty Name="PERSONID" ColumnName="PERSONID" />
+                <ScalarProperty Name="PERSONNAME" ColumnName="PERSONNAME" />
+                <ScalarProperty Name="ITEMID" ColumnName="ITEMID" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="TRANSACTIONID" ColumnName="TRANSACTIONID" />
+                <ScalarProperty Name="EFID" ColumnName="EFID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="UTModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="ITEMID" ColumnName="ITEMID" />
+                <ScalarProperty Name="ITEMNAME" ColumnName="ITEMNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="UTModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="TRANSACTIONID" ColumnName="TRANSACTIONID" />
+                <ScalarProperty Name="PERSONID" ColumnName="PERSONID" />
+                <ScalarProperty Name="PERSONNAME" ColumnName="PERSONNAME" />
+                <ScalarProperty Name="ITEMID" ColumnName="ITEMID" />
+                <ScalarProperty Name="TRANSACTIONDATE" ColumnName="TRANSACTIONDATE" />
+                <ScalarProperty Name="TRANSACTIONTYPE" ColumnName="TRANSACTIONTYPE" />
+                <ScalarProperty Name="EFID" ColumnName="EFID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="UTModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="TRANSACTIONTYPE" ColumnName="TRANSACTIONTYPE" />
+                <ScalarProperty Name="TRANSACTIONNAME" ColumnName="TRANSACTIONNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
