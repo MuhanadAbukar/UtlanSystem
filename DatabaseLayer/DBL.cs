@@ -16,7 +16,7 @@ namespace DatabaseLayer
         public bool NewLogEntry(string transactiondate, int itemid, string personid, string name, string transactionid, int type)
         {
             var model = new EFModel();
-            var id = model.Logs.Max(x => x.EFID);
+            var id = model.Logs.Count() == 0 ? 1 : model.Logs.Max(x => x.EFID);
             var log = new Log()
             {
                 TRANSACTIONID = transactionid,
@@ -38,6 +38,18 @@ namespace DatabaseLayer
             {
                 return false;
             }
+        }
+        public List<Active> GetAllExpired()
+        {
+            var c = new EFModel();
+            var thirtyDaysAgo = DateTime.Now.AddDays(-30);
+            var expired = c.Actives.Where(x => x.DATE > thirtyDaysAgo).ToList();
+            return expired;
+        }
+        public Email GetEmailKey()
+        {
+            var c = new EFModel();
+            return c.Emails.First();
         }
         public Person ReturnItem(ListBoxItem item)
         {

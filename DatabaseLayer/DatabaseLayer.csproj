@@ -67,6 +67,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EFMODEL.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Email.cs">
+      <DependentUpon>EFMODEL.tt</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs">
       <DependentUpon>EFMODEL.tt</DependentUpon>
     </Compile>

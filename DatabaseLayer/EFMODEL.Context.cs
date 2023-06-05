@@ -29,5 +29,6 @@ namespace DatabaseLayer
         public DbSet<Item> Items { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Email> Emails { get; set; }
     }
 }

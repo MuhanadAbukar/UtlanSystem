@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using BLayer;
 using BClasses;
 using ListBoxItem = BClasses.ListBoxItem;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Utlan
 {
@@ -40,7 +41,10 @@ namespace Utlan
             selecteditems.ForEach(x => {
                 bl.Return(x);
             });
-
+            RegisteredItems.Items.Clear();
+            var email = TextBoxID.Text.ToLower().Trim();
+            var items = bl.GetBorrowedItems(email);
+            items.ForEach(x => { RegisteredItems.Items.Add(new ListBoxItem { Text = bl.ItemIDToItemName(x.ITEMID) + ".  Expiration:" + x.DATE.AddDays(30).ToString("dd/MM/yyyy"), Value = x.TRANSACTIONID + "," + x.ITEMID }); });
         }
         private void RegisterID_Click(object sender, EventArgs e)
         {

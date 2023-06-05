@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="UTModel.Transaction" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
         <AssociationConnector Association="UTModel.FK_Logs_Items" ManuallyRouted="false" />
         <AssociationConnector Association="UTModel.FK_Logs_Transaction" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="UTModel.Email" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

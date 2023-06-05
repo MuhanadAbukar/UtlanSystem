@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLayer", "DatabaseLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BClasses", "BClasses\BClasses.csproj", "{8EAD434F-4D16-4136-AE18-B11B385C6DC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtlånChecker", "UtlånChecker\UtlånChecker.csproj", "{51253AB5-5266-41E7-BEF9-ECD9EE8001C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtlanWebsite", "UtlanWebsite\UtlanWebsite.csproj", "{0AFB54E4-0C16-41BA-956E-F77041DC479F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{8EAD434F-4D16-4136-AE18-B11B385C6DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EAD434F-4D16-4136-AE18-B11B385C6DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EAD434F-4D16-4136-AE18-B11B385C6DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51253AB5-5266-41E7-BEF9-ECD9EE8001C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51253AB5-5266-41E7-BEF9-ECD9EE8001C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51253AB5-5266-41E7-BEF9-ECD9EE8001C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51253AB5-5266-41E7-BEF9-ECD9EE8001C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AFB54E4-0C16-41BA-956E-F77041DC479F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AFB54E4-0C16-41BA-956E-F77041DC479F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AFB54E4-0C16-41BA-956E-F77041DC479F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AFB54E4-0C16-41BA-956E-F77041DC479F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

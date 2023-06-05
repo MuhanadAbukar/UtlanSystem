@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Active">
           <Key>
             <PropertyRef Name="EFID" />
@@ -15,6 +15,16 @@
           <Property Name="DATE" Type="date" Nullable="false" />
           <Property Name="TRANSACTIONID" Type="nvarchar(max)" />
           <Property Name="EFID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'UtlånMuhanad.dbo.Email' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="EmailKey" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="EmailKey" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Items">
           <Key>
@@ -71,6 +81,12 @@
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Email" EntityType="Self.Email" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Email].[EmailKey] AS [EmailKey], 
+[Email].[Email] AS [Email]
+FROM [dbo].[Email] AS [Email]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Logs_Items" Association="Self.FK_Logs_Items">
             <End Role="Items" EntitySet="Items" />
             <End Role="Logs" EntitySet="Logs" />
@@ -80,8 +96,7 @@
             <End Role="Logs" EntitySet="Logs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -163,7 +178,16 @@
             <End Role="Transaction" EntitySet="Transactions" />
             <End Role="Logs" EntitySet="Logs" />
           </AssociationSet>
+          <EntitySet Name="Emails" EntityType="UTModel.Email" />
         </EntityContainer>
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="EmailKey" />
+            <PropertyRef Name="Email1" />
+          </Key>
+          <Property Name="EmailKey" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -208,6 +232,14 @@
               <MappingFragment StoreEntitySet="Transaction">
                 <ScalarProperty Name="TRANSACTIONTYPE" ColumnName="TRANSACTIONTYPE" />
                 <ScalarProperty Name="TRANSACTIONNAME" ColumnName="TRANSACTIONNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emails">
+            <EntityTypeMapping TypeName="UTModel.Email">
+              <MappingFragment StoreEntitySet="Email">
+                <ScalarProperty Name="Email1" ColumnName="Email" />
+                <ScalarProperty Name="EmailKey" ColumnName="EmailKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

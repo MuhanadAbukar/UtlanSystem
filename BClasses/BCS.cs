@@ -28,4 +28,15 @@ namespace BClasses
         public string personid { get; set; }
         public string personname { get; set; }
     }
+
+    public class Admin
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+
+    public class AdminData
+    {
+        public List<Admin> Admins { get; set; }
+    }
 }
